@@ -3,15 +3,26 @@ const url = require('url');
 
 const server = http.createServer(function(req,res) {
     const urlObj = url.parse(req.url);
-    if(urlObj.pathname === '/') {
+    if (urlObj.pathname === '/') {
         res.write('Hello World!');
-        res.end();
+    }
+    else if (urlObj.pathname === '/hello') {
+        res.write(`
+
+<html>
+<head></head>
+<body>
+    <h1>Hello!</h1>
+</body>
+</html>
+
+`);
     }
     else {
+        res.statusCode = 404;
         res.write('404 Not found!');
-        res.end();
     }
-
+    res.end();
 });
 
 server.listen(3000);
