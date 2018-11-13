@@ -1,0 +1,16 @@
+{
+  "name": "dynweb-exercise-3",
+  "version": "1.0.0",
+  "description": "Dyn Web Exercise 3",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Christian Fressl, Kevin Schmid",
+  "license": "ISC",
+  "dependencies": {
+    "handlebars": "^4.0.12",
+    "formidable": "^1.2.1",
+    "npm": "^6.4.1"
+  }
+}
