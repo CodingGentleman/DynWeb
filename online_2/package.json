@@ -1,0 +1,17 @@
+{
+  "name": "dynweb-ws2018-ue3-sample-server",
+  "version": "1.0.0",
+  "description": "FH Joanneum Kapfenberg, Software Design, Dynamic Web sample server for exercise 3",
+  "main": "ue-sample-server.js",
+  "dependencies": {
+    "formidable": "^1.2.1",
+    "handlebars": "^4.0.12",
+    "npm": "^6.4.1"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Robert Möstl",
+  "license": "ISC"
+}
