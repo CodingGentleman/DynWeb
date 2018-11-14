@@ -20,6 +20,11 @@ const routes = [
 		methods: {
 			'post': postPersist
 		}
+	}, {
+		rex: /\/\S*\/?/,
+		methods: {
+			'get': getProfile
+		}
 	}
 ];
 
@@ -45,17 +50,33 @@ function getNew(req, res) {
 	res.end();	
 }
 
+function getProfile(req, res) {
+	fs.readFile('./data'+url.parse(req.url).pathname+'.json', 'utf8', (err, data) => {
+        if (err) throw err;
+        const fields = JSON.parse(data);
+        res.write(loadView('profile')(fields));
+        res.end();
+    });
+}
+
 function get405(req, res) {
 	getError(req, res, 405);
+}
+
+function getPersist(req, res, slug) {
+	res.setHeader('Location', '/'+slug);
+    res.statusCode = 303;
+	res.write(loadView('persisted')({link:slug}))
+	res.end();
 }
 
 function postPersist(req, res) {
 	const form = new formidable.IncomingForm();
 	form.parse(req, (err, fields) => {
-        res.setHeader('Location', '/uri-to-new-resource');
-        res.statusCode = 201;
-        res.write(util.inspect(fields));
-		res.end();
+		fs.writeFile('./data/'+fields.slug+'.json', JSON.stringify(fields), (err) => {
+            if(err) throw err;
+        	getPersist(req, res, fields.slug);
+		});
 	});
 }
 /*
@@ -75,6 +96,7 @@ function getError (req, res, code) {
 
 function dispatchRequest (req, res) {
     const parsedUrl = url.parse(req.url);
+	console.log(parsedUrl.pathname);
     const method = req.method.toLowerCase();
     const route = routes.find( route => {
         return route.rex.test(parsedUrl.pathname);
